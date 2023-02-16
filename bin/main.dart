@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:math';
-import 'package:untitled10/Instagram.dart';
+
+import '../lib/Instagram.dart';
 
 List<Instagram> instagram = [];
 
@@ -22,7 +23,14 @@ void interface() {
         break;
       }
     case 3:
-      {}
+      {
+        resetPassword();
+        break;
+      }
+    default:
+      {
+        interface();
+      }
   }
 }
 
@@ -39,6 +47,8 @@ void register() {
   String phone = stdin.readLineSync()!;
   stdout.write("Tug'ulgan kuningizni kiriting -> ");
   String birthday = stdin.readLineSync()!;
+  stdout.write("Pochtangizni kiriting -> ");
+  String mail = stdin.readLineSync()!;
   bool check = true;
   for (var item in instagram) {
     if (item.username == username) {
@@ -50,12 +60,14 @@ void register() {
       username: username,
       password: password,
       phone: phone,
-      birthday: birthday);
+      birthday: birthday,
+      mail: mail,
+  );
   if (check) {
     instagram.add(instagrams);
     print("Successfully add \n");
   } else {
-    print("Bunday foydalanuvchi mavjud emas");
+    print("Bunday foydalanuvchi mavjud");
   }
   interface();
 }
@@ -130,10 +142,32 @@ void sendMessage() {
       String message = stdin.readLineSync()!;
       instagram[i].message = message;
       instagram[i].inUsername = usernameGlobal;
+      print("Xabar yuborildi ! \n");
     }
   }
   if (!check) {
     print("Bunday username yo'q \n");
   }
   enter();
+}
+
+void resetPassword() {
+  stdout.write("Ismingizni kiriting -> ");
+  String name = stdin.readLineSync()!;
+  stdout.write("Tug'ulgan kuningizni kiriting -> ");
+  String birthday = stdin.readLineSync()!;
+  stdout.write("Pochtangizni kiriting -> ");
+  String mail = stdin.readLineSync()!;
+
+  bool check = false;
+  for (var item in instagram) {
+    if (item.name == name && item.birthday == birthday && item.mail == mail) {
+      check = true;
+      print("Username -> ${item.username} \nPassword -> ${item.password} \n");
+    }
+  }
+  if (!check) {
+    print("Noto'g'ri malumot kiritildi !!! \n");
+  }
+  interface();
 }
